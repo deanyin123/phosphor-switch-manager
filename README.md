@@ -1,0 +1,1 @@
+# phosphor-switch-manager
