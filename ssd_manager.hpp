@@ -2,7 +2,8 @@
 
 #include <functional>
 #include <sdbusplus/bus.hpp>
-#include "xyz/openbmc_project/switch/Ssd/server.hpp"
+#include <xyz/openbmc_project/Switch/Ssd/server.hpp>
+#include <sdbusplus/server/object.hpp>
 
 namespace phosphor
 {
@@ -12,7 +13,7 @@ namespace manager
 {
 
 using SSDInherit = sdbusplus::server::object::object<
-    sdbusplus::xyz::openbmc_project::switch::server::Ssd>;
+    sdbusplus::xyz::openbmc_project::Switch::server::Ssd>;
 namespace sdbusRule = sdbusplus::bus::match::rules;
 
 /** @class BMC
@@ -20,7 +21,7 @@ namespace sdbusRule = sdbusplus::bus::match::rules;
  *  @details A concrete implementation for xyz.openbmc_project.State.BMC
  *  DBus API.
  */
-class SSD : public SSDInherit
+class SSD: public SSDInherit
 {
   public:
     /** @brief Constructs SSD  Manager
@@ -29,16 +30,23 @@ class SSD : public SSDInherit
      * @param[in] busName   - The Dbus name to own
      * @param[in] objPath   - The Dbus object path
      */
-    SSD(sdbusplus::bus::bus& bus, const char* objPath) :
-        SSDInherit(bus, objPath, true), bus(bus)
+    SSD() = delete;
+    ~SSD() = default;
+    SSD(const SSD&) = delete;
+    SSD& operator=(const SSD&) = delete;
+    SSD(SSD&&) = delete;
+    SSD& operator=(SSD&&) = delete;
+    
+    SSD(sdbusplus::bus::bus& bus, const std::string& objPath):
+        SSDInherit(bus, objPath.c_str()), path(objPath)
     {
         //
-    };
-
+    }
+    
   private:
-    sdbusplus::bus::bus& bus;
+    std::string path;
 };
 
 } // namespace manager
-} // namespace state
+} // namespace ssd
 } // namespace phosphor
