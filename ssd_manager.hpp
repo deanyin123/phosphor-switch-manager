@@ -20,7 +20,7 @@ using SSDInherit = sdbusplus::server::object::object<
  *  @details A concrete implementation for xyz.openbmc_project.State.BMC
  *  DBus API.
  */
-class SSD: public SSDInherit
+class SSDInit: public SSDInherit
 {
   public:
     /** @brief Constructs SSD  Manager
@@ -29,14 +29,14 @@ class SSD: public SSDInherit
      * @param[in] busName   - The Dbus name to own
      * @param[in] objPath   - The Dbus object path
      */
-    SSD() = delete;
-    ~SSD() = default;
-    SSD(const SSD&) = delete;
-    SSD& operator=(const SSD&) = delete;
-    SSD(SSD&&) = delete;
-    SSD& operator=(SSD&&) = delete;
+    SSDInit() = delete;
+    ~SSDInit() = default;
+    SSDInit(const SSDInit&) = delete;
+    SSDInit& operator=(const SSDInit&) = delete;
+    SSDInit(SSDInit&&) = delete;
+    SSDInit& operator=(SSDInit&&) = delete;
     
-    SSD(sdbusplus::bus::bus& bus, const std::string& objPath, const std::string& ssdtype):
+    SSDInit(sdbusplus::bus::bus& bus, const std::string& objPath, const std::string& ssdtype):
         SSDInherit(bus, objPath.c_str(), true), path(objPath)
     {
         type(ssdtype);
@@ -45,6 +45,13 @@ class SSD: public SSDInherit
     
   private:
     std::string path;
+};
+
+class SSDInfo
+{
+    public:
+        int get_ssdnum(void);
+    
 };
 
 } // namespace manager

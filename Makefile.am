@@ -3,7 +3,8 @@ AM_DEFAULT_SOURCE_EXT = .cpp
 sbin_PROGRAMS = phosphor-ssd-manager
 
 phosphor_ssd_manager_SOURCES = \
-	ssd_manager_main.cpp 
+	ssd_manager_main.cpp \
+    ssd_manager.cpp
     
     
 phosphor_ssd_manager_LDFLAGS = $(SDBUSPLUS_LIBS) \

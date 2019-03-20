@@ -7,8 +7,11 @@
 int main(int argc, char**)
 {
     auto SSDName = "ssd";
-    auto SSDNum = 12; //get from i2c -c ssdinfo
+    //auto SSDNum = 12; //get from i2c -c ssdinfo
     std::string objPathlist[24];
+    
+    phosphor::ssd::manager::SSDInfo ssdInfo;
+    auto SSDNum = ssdInfo.get_ssdnum();
 
     for(int i = 0; i < SSDNum; i++)
     {
@@ -22,7 +25,7 @@ int main(int argc, char**)
     // Add sdbusplus ObjectManager.
     sdbusplus::server::manager::manager objManager(bus, SSD_OBJPATH);
     
-    std::vector<std::unique_ptr<phosphor::ssd::manager::SSD>> ssds;
+    std::vector<std::unique_ptr<phosphor::ssd::manager::SSDInit>> ssds;
 
     auto ssdtype = "U.2";
     for (auto& ssdpath : objPathlist)
@@ -30,7 +33,7 @@ int main(int argc, char**)
         if(ssdpath.empty())
             break;
         ssds.emplace_back(
-            std::make_unique<phosphor::ssd::manager::SSD>(bus, ssdpath, ssdtype));
+            std::make_unique<phosphor::ssd::manager::SSDInit>(bus, ssdpath, ssdtype));
     }
     
     bus.request_name(SSD_BUSNAME);
