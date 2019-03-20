@@ -14,7 +14,6 @@ namespace manager
 
 using SSDInherit = sdbusplus::server::object::object<
     sdbusplus::xyz::openbmc_project::Switch::server::Ssd>;
-namespace sdbusRule = sdbusplus::bus::match::rules;
 
 /** @class BMC
  *  @brief OpenBMC BMC state management implementation.
@@ -37,10 +36,11 @@ class SSD: public SSDInherit
     SSD(SSD&&) = delete;
     SSD& operator=(SSD&&) = delete;
     
-    SSD(sdbusplus::bus::bus& bus, const std::string& objPath):
-        SSDInherit(bus, objPath.c_str()), path(objPath)
+    SSD(sdbusplus::bus::bus& bus, const std::string& objPath, const std::string& ssdtype):
+        SSDInherit(bus, objPath.c_str(), true), path(objPath)
     {
-        //
+        type(ssdtype);
+        emit_object_added();
     }
     
   private:

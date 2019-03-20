@@ -17,24 +17,22 @@ int main(int argc, char**)
         objPathlist[i] += char_i;
     }
 
-    //using group = std::set<phosphor::led::Layout::LedAction>;
-    //using LedLayout = std::map<std::string, group>;
-
     auto bus = sdbusplus::bus::new_default();
 
     // Add sdbusplus ObjectManager.
     sdbusplus::server::manager::manager objManager(bus, SSD_OBJPATH);
     
     std::vector<std::unique_ptr<phosphor::ssd::manager::SSD>> ssds;
-    
+
+    auto ssdtype = "U.2";
     for (auto& ssdpath : objPathlist)
     {
+        if(ssdpath.empty())
+            break;
         ssds.emplace_back(
-            std::make_unique<phosphor::ssd::manager::SSD>(bus, ssdpath));
+            std::make_unique<phosphor::ssd::manager::SSD>(bus, ssdpath, ssdtype));
     }
     
-    //phosphor::ssd::manager::SSD manager(bus, objPath.c_str()); 
-
     bus.request_name(SSD_BUSNAME);
 
     while (true)

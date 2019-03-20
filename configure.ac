@@ -22,13 +22,8 @@ AX_APPEND_COMPILE_FLAGS([-Wall -Werror], [CXXFLAGS])
 # Checks for library functions
 LT_INIT # Removes WARNING: unrecognized options: --with-libtool-sysroot
 
-AC_ARG_VAR(SSD_BUSNAME, [The Host Dbus busname to own])
-AS_IF([test "x$SSD_BUSNAME" == "x"], [SSD_BUSNAME="xyz.openbmc_project.Switch.Ssd"])
-AC_DEFINE_UNQUOTED([SSD_BUSNAME], ["$SSD_BUSNAME"], [The Host DBus busname to own])
-
-AC_ARG_VAR(SSD_OBJPATH, [The host state manager Dbus root])
-AS_IF([test "x$SSD_OBJPATH" == "x"], [SSD_OBJPATH="/xyz/openbmc_project/switch/ssd"])
-AC_DEFINE_UNQUOTED([SSD_OBJPATH], ["$SSD_OBJPATH"], [The host state manager Dbus root])
+AC_DEFINE(SSD_BUSNAME, "xyz.openbmc_project.Switch.Ssd", [The log manager DBus busname to own.])
+AC_DEFINE(SSD_OBJPATH, "/xyz/openbmc_project/switch/ssd", [The log manager DBus object path.])
 
 # Check for header files.
 AC_CHECK_HEADER(systemd/sd-bus.h, ,[AC_MSG_ERROR([Could not find systemd/sd-bus.h...systemd development package required])])
