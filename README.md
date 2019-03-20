@@ -24,6 +24,26 @@ usird2@SRD-0000057:~/workspace/dean/image-bmc/openbmc-dev$ curl -b cjar -k https
   "status": "ok"
 }
 
-
+2019.3.20
+description:init ssd1-12 property "Type" to "U.2"
+commit:cd90f84c3ab37e649195b22738464124322bb534
+test version:openbmc-2.7-dev
+test log:
+usird2@SRD-0000057:~/workspace/dean/image-bmc$ curl -b cjar -k https://192.168.3.57/xyz/openbmc_project/switch/sd/ssd1
+{
+  "data": {
+    "ConfigureWidth": "",
+    "Inserted": "",
+    "LinkSpeed": "",
+    "LinkStatus": "",
+    "LinkWidth": "",
+    "PartitionID": "",
+    "SlotAddr": 0,
+    "Status": "",
+    "Type": "U.2"
+  },
+  "message": "200 OK",
+  "status": "ok"
+}
 
 
